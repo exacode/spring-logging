@@ -65,3 +65,15 @@ Console output for `BeanWithAspectLogging#sayHelloAndThrowNullPointerException(S
 		2013-09-04 11:43:24,582 [ERROR] o.s.u.l.a.b.BeanTypeAnnotated:134 - XXX Error occured: 
 		/* Exception stack trace */
 		2013-09-04 11:41:30,448 [TRACE] o.s.u.l.a.b.BeanTypeAnnotated:140 - <<< Returning BeanWithAspectLogging.sayHelloAndThrowNullPointerException(): null (14[ms])
+
+Maven repository
+----------------
+
+In order to use this library in your project add (repository)[http://github.com/mendlik/mvn-repo] location in your `pom.xml`:
+
+		<repositories>
+		    <repository>
+			<id>mendlik-releases</id>
+			<url>https://github.com/mendlik/mvn-repo/raw/master/releases</url>
+		    </repository>
+		</repositories>
