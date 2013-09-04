@@ -73,7 +73,7 @@ In order to use this library in your project add (repository)[http://github.com/
 
 		<repositories>
 		    <repository>
-			<id>mendlik-releases</id>
-			<url>https://github.com/mendlik/mvn-repo/raw/master/releases</url>
+		        <id>mendlik-releases</id>
+		        <url>https://github.com/mendlik/mvn-repo/raw/master/releases</url>
 		    </repository>
 		</repositories>
