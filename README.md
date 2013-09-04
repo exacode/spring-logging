@@ -36,8 +36,8 @@ You can annotate single methods or classes.
 
 Example usage:
 
-import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
+		import org.slf4j.Logger;
+		import org.springframework.stereotype.Component;
 
 		@Component
 		@Logged
