@@ -69,7 +69,7 @@ Console output for `BeanWithAspectLogging#sayHelloAndThrowNullPointerException(S
 Maven repository
 ----------------
 
-In order to use this library in your project add (repository)[http://github.com/mendlik/mvn-repo] location in your `pom.xml`:
+In order to use this library in your project add [repository](http://github.com/mendlik/mvn-repo) location in your `pom.xml`:
 
 		<repositories>
 		    <repository>
