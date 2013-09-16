@@ -10,9 +10,9 @@ Contains two mechanisms:
 Logger injection
 ----------------
 
-In order to inject a logger to spring managed bean use `@Log` annotation.
+In order to inject a logger instance into a spring managed bean use `@Log` annotation.
 
-Example usage:
+### Example usage:
 
 		
 		import org.slf4j.Logger;
@@ -31,10 +31,10 @@ Example usage:
 Logger aspects
 --------------
 
-In order to log method invocations with aspects use `@Logged` accotation.
-You can annotate single methods or classes.
+In order to log method invocations with aspects use `@Logged` annotation.
+You can use this annotation on methods and classes.
 
-Example usage:
+### Example usage:
 
 		import org.slf4j.Logger;
 		import org.springframework.stereotype.Component;
@@ -58,6 +58,29 @@ Example usage:
 	
 		}
 
+### Configuration
+
+To enable aspect logging just register `LoggedAspect` in spring context.
+
+Example using java config mechanism:
+
+		import org.springframework.logging.aspect.LoggedAspect;
+		import org.springframework.context.annotation.Bean;
+		import org.springframework.context.annotation.Configuration;
+		import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+		@Configuration
+		@EnableAspectJAutoProxy(proxyTargetClass = true)
+		public class LoggedAspectConfiguration {
+
+			@Bean
+			public LoggedAspect loggedAspect() {
+				return new LoggedAspect();
+			}
+
+		}
+
+### Console output
 Console output for `BeanWithAspectLogging#sayHelloAndThrowNullPointerException(String hello)`:
 
 		2013-09-04 11:43:24,561 [TRACE] o.s.u.l.a.b.BeanTypeAnnotated:118 - >>> BeanTypeAnnotated.sayHelloReturnException(..): [xxx]
