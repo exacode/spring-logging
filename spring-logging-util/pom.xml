@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>spring-logging-aspect</artifactId>
+	<artifactId>spring-logging-util</artifactId>
 
 	<parent>
 		<groupId>org.springframework.logging</groupId>
@@ -9,13 +9,8 @@
 		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 
-	<name>Spring Logging Aspect</name>
-	<description>Logging aspects for Spring based applications</description>
-
-	<properties>
-		<!-- Dependency versions -->
-		<version.aspectj>1.6.12</version.aspectj>
-	</properties>
+	<name>Spring Logging Utilities</name>
+	<description>Logger injection for Spring based applications</description>
 
 	<dependencies>
 		<!-- Test dependencies -->
@@ -67,35 +62,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 			<version>${version.spring}</version>
-		</dependency>
-
-		<!-- Aspects -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${version.spring}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${version.aspectj}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjtools</artifactId>
-			<version>${version.aspectj}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${version.aspectj}</version>
-		</dependency>
-		
-		<!-- Logging shared dependencies -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-logging-util</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

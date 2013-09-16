@@ -23,9 +23,30 @@ In order to inject a logger instance into a spring managed bean use `@Log` annot
 			
 			@Log
 			private Logger logger;
+
+			@Log(fromClass = SomeOther.class)
+			private Logger logger2;
 			
 			/* ... */
 			
+		}
+
+### Configuration
+
+To enable logger injection with `@Log`, simply register `LogInjector` in spring context.
+
+Example using spring-java-config:
+
+		import org.springframework.logging.inject.LogInjector;
+		import org.springframework.context.annotation.Bean;
+		import org.springframework.context.annotation.Configuration;
+
+		@Configuration
+		public class LogInjectorConfiguration {
+			@Bean
+			public LogInjector logInjector() {
+				return new LogInjector();
+			}
 		}
 
 Logger aspects
@@ -62,7 +83,7 @@ You can use this annotation on methods and classes.
 
 To enable aspect logging just register `LoggedAspect` in spring context.
 
-Example using java config mechanism:
+Example using spring-java-config:
 
 		import org.springframework.logging.aspect.LoggedAspect;
 		import org.springframework.context.annotation.Bean;
@@ -81,13 +102,18 @@ Example using java config mechanism:
 		}
 
 ### Console output
-Console output for `BeanWithAspectLogging#sayHelloAndThrowNullPointerException(String hello)`:
+
+Default console output for `BeanWithAspectLogging#sayHelloAndThrowNullPointerException(String hello)`:
 
 		2013-09-04 11:43:24,561 [TRACE] o.s.u.l.a.b.BeanTypeAnnotated:118 - >>> BeanTypeAnnotated.sayHelloReturnException(..): [xxx]
 		/* Logs printed during method invocation */
 		2013-09-04 11:43:24,582 [ERROR] o.s.u.l.a.b.BeanTypeAnnotated:134 - XXX Error occured: 
 		/* Exception stack trace */
 		2013-09-04 11:41:30,448 [TRACE] o.s.u.l.a.b.BeanTypeAnnotated:140 - <<< Returning BeanWithAspectLogging.sayHelloAndThrowNullPointerException(): null (14[ms])
+
+*Default console output can be overriden with custom implementation of `MessageFormatter`.*
+*Default logger provider mechanism can be overriden with custom implementation of `LoggerProvider`.*
+
 
 Maven repository
 ----------------

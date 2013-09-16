@@ -1,4 +1,4 @@
-package org.springframework.logging.timer;
+package org.springframework.logging.utils.timer;
 
 /**
  * Formats time duration.
@@ -6,6 +6,8 @@ package org.springframework.logging.timer;
  * @author mendlik
  */
 public interface TimeFormatter {
+
+	TimeFormatter DEFAULT = new DynamicTimeFormatter();
 
 	/**
 	 * Formats time duration expressed in milliseconds.

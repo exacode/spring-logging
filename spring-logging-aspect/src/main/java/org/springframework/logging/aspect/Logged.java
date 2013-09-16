@@ -16,14 +16,6 @@ import java.lang.annotation.Target;
 public @interface Logged {
 
 	/**
-	 * True means that every method invocation argument is logged in new line.
-	 * (Default: false)
-	 * 
-	 * @return
-	 */
-	boolean eachArgumentInNewLine() default false;
-
-	/**
 	 * True mens that method is invoked in the catch finally block. So timer is
 	 * always stopped, all exceptions are logged on console. (Default: true).
 	 * <p>

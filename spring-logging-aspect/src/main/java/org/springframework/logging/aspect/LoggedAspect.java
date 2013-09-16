@@ -1,13 +1,14 @@
 package org.springframework.logging.aspect;
 
-import java.util.Arrays;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.logging.timer.Timer;
+import org.springframework.logging.aspect.message.DefaultMessageFormatter;
+import org.springframework.logging.aspect.message.MessageFormatter;
+import org.springframework.logging.aspect.provider.DefaultLoggerProvider;
+import org.springframework.logging.aspect.provider.LoggerProvider;
+import org.springframework.logging.utils.timer.Timer;
 
 /**
  * Aspect that logs information about method invocation.
@@ -24,23 +25,28 @@ import org.springframework.logging.timer.Timer;
 @Aspect
 public class LoggedAspect {
 
-	static interface LoggerProvider {
+	private final LoggerProvider loggerProvider;
 
-		Logger getLogger(ProceedingJoinPoint pjp);
+	private final MessageFormatter messageFormatter;
 
+	public LoggedAspect() {
+		this(new DefaultLoggerProvider(), new DefaultMessageFormatter());
 	}
 
-	static class DefaultLoggerProvider implements LoggerProvider {
-
-		@Override
-		public Logger getLogger(ProceedingJoinPoint pjp) {
-			return LoggerFactory.getLogger(pjp.getSignature()
-					.getDeclaringType());
-		}
-
+	public LoggedAspect(LoggerProvider loggerProvider) {
+		this(loggerProvider, new DefaultMessageFormatter());
 	}
 
-	protected LoggerProvider loggerProvider = new DefaultLoggerProvider();
+	public LoggedAspect(MessageFormatter messageFormatter) {
+		this(new DefaultLoggerProvider(), messageFormatter);
+	}
+
+	public LoggedAspect(LoggerProvider loggerProvider,
+			MessageFormatter messageFormatter) {
+		super();
+		this.loggerProvider = loggerProvider;
+		this.messageFormatter = messageFormatter;
+	}
 
 	/**
 	 * Aspect activated around method invocation. All method arguments are
@@ -76,81 +82,30 @@ public class LoggedAspect {
 		return logMethodInvocation(pjp, log);
 	}
 
-	/**
-	 * {@link LoggerFactory} caches loggers so no additional cache is necessary.
-	 * 
-	 * @param pjp
-	 * @return
-	 */
-	private Logger getLogger(ProceedingJoinPoint pjp) {
-		return loggerProvider.getLogger(pjp);
-	}
-
-	/**
-	 * Invokes method and log crucial information.
-	 * 
-	 * @param pjp
-	 * @param log
-	 * @return
-	 * @throws Throwable
-	 */
 	private Object logMethodInvocation(ProceedingJoinPoint pjp, Logged log)
 			throws Throwable {
-		Logger logger = getLogger(pjp);
+		Logger logger = loggerProvider.getLogger(pjp);
 		Object[] args = pjp.getArgs();
-
-		if (logger.isTraceEnabled()) {
-			logMethodInvocationArguments(pjp, logger, log, args);
-		}
-
-		return logMethodInocation(pjp, logger, log, args);
-	}
-
-	private void logMethodInvocationArguments(ProceedingJoinPoint pjp,
-			Logger logger, Logged log, Object[] args) {
-		if (log.eachArgumentInNewLine()) {
-			logger.trace(">>> {}", pjp.getSignature().getName());
-			logger.trace(">>> Arguments ({})", args.length);
-			for (int i = 0; i < args.length; ++i) {
-				logger.trace("\t Argument ({}): {}", i + 1, args[i]);
-			}
-		} else {
-			logger.trace(">>> {}: {}", pjp.getSignature().toShortString(),
-					Arrays.toString(args));
-		}
-	}
-
-	private Object logMethodInocation(ProceedingJoinPoint pjp, Logger logger,
-			Logged log, Object[] args) throws Throwable {
+		messageFormatter.logMethodInvocationHeader(pjp, logger, log, args);
 		Object result = null;
-		if (!logger.isTraceEnabled() && !logger.isErrorEnabled()) {
-			result = pjp.proceed(args);
-		} else if (log.tryCatchFinally()) {
+		if (log.tryCatchFinally()) {
 			Timer timer = new Timer().start();
 			try {
 				result = pjp.proceed(args);
 			} catch (Exception e) {
-				if (logger.isErrorEnabled()) {
-					logger.error("XXX Error occured: ", e);
-				}
+				messageFormatter.logMethodException(pjp, logger, log, e);
 				throw e;
 			} finally {
 				timer.stop();
-				if (logger.isTraceEnabled()) {
-					logger.trace("<<< Returning {}: {} ({})", pjp
-							.getSignature().toShortString(), result, timer
-							.getFormattedResult());
-				}
+				messageFormatter.logMethodReturn(pjp, logger, log, timer,
+						result);
 			}
 		} else {
 			Timer timer = new Timer();
 			timer.start();
 			result = pjp.proceed(args);
 			timer.stop();
-			if (logger.isTraceEnabled()) {
-				logger.trace("<<< Returning {}: {} ({})", pjp.getSignature()
-						.toShortString(), result, timer.getFormattedResult());
-			}
+			messageFormatter.logMethodReturn(pjp, logger, log, timer, result);
 		}
 		return result;
 	}

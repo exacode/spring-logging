@@ -42,6 +42,7 @@
 	</properties>
 
 	<modules>
+		<module>spring-logging-util</module>
 		<module>spring-logging-aspect</module>
 		<module>spring-logging-inject</module>
 	</modules>

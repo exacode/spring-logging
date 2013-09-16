@@ -4,9 +4,9 @@ import org.fest.assertions.api.Assertions;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-public class LogInjectorTest extends LogInjectorTestBase {
+public class ParameterizedLogInjectorTest extends LogInjectorTestBase {
 
-	@Log
+	@Log(fromClass = LogInjectorTestBase.class)
 	private Logger logger;
 
 	@Test
@@ -15,9 +15,9 @@ public class LogInjectorTest extends LogInjectorTestBase {
 	}
 
 	@Test
-	public void shouldNameLoggerAfterThisClass() {
+	public void shouldNameLoggerAfterOtherClass() {
 		Assertions.assertThat(logger.getName()).isEqualTo(
-				this.getClass().getName());
+				LogInjectorTestBase.class.getName());
 	}
 
 	@Test

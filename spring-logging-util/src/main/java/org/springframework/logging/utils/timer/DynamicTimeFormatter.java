@@ -1,4 +1,4 @@
-package org.springframework.logging.timer;
+package org.springframework.logging.utils.timer;
 
 import java.util.concurrent.TimeUnit;
 

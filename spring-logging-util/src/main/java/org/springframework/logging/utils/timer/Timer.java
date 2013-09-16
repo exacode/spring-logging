@@ -1,4 +1,4 @@
-package org.springframework.logging.timer;
+package org.springframework.logging.utils.timer;
 
 /**
  * Constructed to make time records. Uses System.currentTimeMillis().
@@ -11,10 +11,10 @@ public class Timer {
 
 	private Long result = null;
 
-	private TimeFormatter timeFormatter = new DynamicTimeFormatter();
+	private final TimeFormatter timeFormatter;
 
 	public Timer() {
-		this(new DynamicTimeFormatter());
+		this(TimeFormatter.DEFAULT);
 	}
 
 	public Timer(TimeFormatter timeFormatter) {
@@ -58,7 +58,7 @@ public class Timer {
 		return result;
 	}
 
-	public String getFormattedResult() {
+	public String getTextResult() {
 		return timeFormatter.format(getResult());
 	}
 

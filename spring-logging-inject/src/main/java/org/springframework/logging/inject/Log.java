@@ -17,4 +17,20 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Documented
 public @interface Log {
+	/**
+	 * Specifies logger name. Injected logger will be named corresponding to the
+	 * class passed as parameter. The default class is the class of a bean where
+	 * injection takes place.
+	 */
+	Class<?> fromClass() default DEFAULT.class;
+
+	/**
+	 * Create as a default value for {@link Log#fromClass()}.
+	 * 
+	 * @author mendlik
+	 * 
+	 */
+	static class DEFAULT {
+	}
+
 }

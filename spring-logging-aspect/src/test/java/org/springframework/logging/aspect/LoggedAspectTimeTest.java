@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.logging.aspect.beans.BeanNoAspect;
 import org.springframework.logging.aspect.beans.BeanTypeAnnotated;
-import org.springframework.logging.timer.Timer;
+import org.springframework.logging.utils.timer.Timer;
 
 public class LoggedAspectTimeTest extends LoggedAspectTestBase {
 
@@ -39,8 +39,7 @@ public class LoggedAspectTimeTest extends LoggedAspectTestBase {
 		frameworkTimer.stop();
 
 		logger.info("Log count: {}", n);
-		logger.info("Standard logging: {}", timer.getFormattedResult());
-		logger.info("Framework logging: {}",
-				frameworkTimer.getFormattedResult());
+		logger.info("Standard logging: {}", timer.getTextResult());
+		logger.info("Framework logging: {}", frameworkTimer.getTextResult());
 	}
 }

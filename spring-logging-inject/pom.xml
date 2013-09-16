@@ -56,7 +56,7 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${version.slf4j-api}</version>
 		</dependency>
-
+		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

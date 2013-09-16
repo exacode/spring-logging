@@ -8,8 +8,8 @@ import org.springframework.logging.aspect.beans.BeanMethodAnnotated;
 import org.springframework.logging.aspect.beans.BeanNoAspect;
 
 public class LoggedAspectMethodAnnotatedTest extends LoggedAspectTestBase {
-
-	private TestLoggerProvider testLoggerProvider;
+	@Autowired
+	private TestMessageFormatter messageFormatter;
 
 	@Autowired
 	private LoggedAspect loggedAspect;
@@ -22,14 +22,14 @@ public class LoggedAspectMethodAnnotatedTest extends LoggedAspectTestBase {
 
 	@Before
 	public void setUp() {
-		testLoggerProvider = new TestLoggerProvider();
-		loggedAspect.loggerProvider = testLoggerProvider;
+		messageFormatter.reset();
 	}
 
 	@Test
 	public void shouldLogMethodInvocation() {
 		beanMethodAnnotated.sayHello();
-		Assertions.assertThat(testLoggerProvider.getInvocations()).isEqualTo(1);
+		Assertions.assertThat(messageFormatter.getMethodHeaders()).isEqualTo(1);
+		Assertions.assertThat(messageFormatter.getMethodReturns()).isEqualTo(1);
 	}
 
 	@Test
@@ -37,7 +37,11 @@ public class LoggedAspectMethodAnnotatedTest extends LoggedAspectTestBase {
 		try {
 			beanMethodAnnotated.sayHelloReturnException("xxx");
 		} catch (NullPointerException e) {
-			Assertions.assertThat(testLoggerProvider.getInvocations())
+			Assertions.assertThat(messageFormatter.getMethodHeaders())
+					.isEqualTo(1);
+			Assertions.assertThat(messageFormatter.getMethodReturns())
+					.isEqualTo(1);
+			Assertions.assertThat(messageFormatter.getMethodExceptions())
 					.isEqualTo(1);
 			return;
 		}

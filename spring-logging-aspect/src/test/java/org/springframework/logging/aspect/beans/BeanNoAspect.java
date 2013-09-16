@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.logging.timer.Timer;
+import org.springframework.logging.utils.timer.Timer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,7 +33,7 @@ public class BeanNoAspect {
 		} finally {
 			if (logger.isTraceEnabled()) {
 				logger.trace("<<<< Returning: {} ({})", null,
-						timer.getFormattedResult());
+						timer.getTextResult());
 			}
 		}
 	}
@@ -46,8 +46,7 @@ public class BeanNoAspect {
 		sayHello();
 		timer.stop();
 		if (logger.isTraceEnabled()) {
-			logger.trace("<<<< Returning: {} ({})", null,
-					timer.getFormattedResult());
+			logger.trace("<<<< Returning: {} ({})", null, timer.getTextResult());
 		}
 	}
 

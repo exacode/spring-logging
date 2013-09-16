@@ -11,8 +11,13 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class LoggedAspectConfiguration {
 
 	@Bean
+	public TestMessageFormatter messageFormatter() {
+		return new TestMessageFormatter();
+	}
+
+	@Bean
 	public LoggedAspect loggedAspect() {
-		return new LoggedAspect();
+		return new LoggedAspect(messageFormatter());
 	}
 
 }
