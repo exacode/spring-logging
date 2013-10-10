@@ -18,7 +18,7 @@
 			<id>mendlik-snapshots</id>
 			<url>https://github.com/mendlik/mvn-repo/raw/master/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement> 
 
 	<scm>
 		<connection>scm:git:git@github.com:mendlik/spring-logging.git</connection>
