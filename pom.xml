@@ -12,7 +12,7 @@
 	<distributionManagement>
 		<repository>
 			<id>exacode-releases</id>
-			<url>https://github.com/mendlik/mvn-repo/raw/master/releases</url>
+			<url>https://github.com/exacode/mvn-repo/raw/master/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>exacode-snapshots</id>
