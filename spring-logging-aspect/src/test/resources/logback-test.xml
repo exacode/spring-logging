@@ -6,7 +6,8 @@
 			<pattern>%d [%p] %c{1}:%L - %m%n</pattern>
 		</encoder>
 	</appender>
-	<logger name="org.springframework.utils.logging" level="trace" />
+	
+	<logger name="net.exacode.spring.logging" level="trace" />
 	
 
 	<root level="none">
